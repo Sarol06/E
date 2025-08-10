@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terima Kasih & Sampai Jumpa</title>
+  <style>
+    /* === Reset & fluid media === */
+    * { box-sizing: border-box; }
+    img, video { max-width: 100%; height: auto; display: block; }
+    iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; }
+
+    /* === Adaptive scales for all devices & zoom === */
+    :root{
+      --step-base: clamp(14px, 0.9rem + 0.4vw, 18px);
+      --step-h1: clamp(1.8rem, 1.2rem + 3vw, 3.5rem);
+      --step-h2: clamp(1.4rem, 1rem + 1.4vw, 2.2rem);
+      --radius: 12px;
+      --container: min(100% - 32px, 1000px);
+    }
+    html { font-size: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Century Gothic', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-size: var(--step-base);
+      background: #f9f9fb;
+      color: #333;
+    }
+    body.lock-scroll { overflow: hidden; }
+
+    /* === Hero full height that works on mobile === */
+    .hero{
+      position: relative;
+      height: 100svh;
+      min-height: 520px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+    .hero-content{ position: relative; z-index: 2; padding: 0 16px; }
+    .hero h1{ font-family: 'Playfair Display', serif; font-size: var(--step-h1); line-height: 1.15; margin: 0 0 12px; color: #fff; }
+    .hero p{ font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem); color: #eef; margin: 0 0 20px; }
+    .btn{
+      display: inline-block; padding: 0.75rem 1.25rem; border-radius: var(--radius);
+      background: #fff; color: #3b82f6; font-weight: 700; text-decoration: none;
+      transition: transform .2s ease, background-color .2s ease;
+    }
+    .btn:hover{ transform: translateY(-2px); background: #e5e7eb; }
+
+    /* === Liquid/Bubble Background === */
+    .area { background: linear-gradient(to left, #8f94fb, #4e54c8); position: absolute; inset: 0; z-index: 0; }
+    .circles { position: absolute; inset: 0; overflow: hidden; z-index: 1; margin: 0; padding: 0; list-style: none; }
+    .circles li {
+      position: absolute; width: 20px; height: 20px;
+      background: rgba(255,255,255,.22);
+      animation: float 25s linear infinite; bottom: -150px; border-radius: 50%;
+    }
+    .circles li:nth-child(1){ left:25%; width:80px; height:80px; }
+    .circles li:nth-child(2){ left:10%; width:20px; height:20px; animation-delay:2s; animation-duration:12s; }
+    .circles li:nth-child(3){ left:70%; width:20px; height:20px; animation-delay:4s; }
+    .circles li:nth-child(4){ left:40%; width:60px; height:60px; animation-duration:18s; }
+    .circles li:nth-child(5){ left:65%; width:20px; height:20px; }
+    .circles li:nth-child(6){ left:75%; width:110px; height:110px; animation-delay:3s; }
+    .circles li:nth-child(7){ left:35%; width:150px; height:150px; animation-delay:7s; }
+    .circles li:nth-child(8){ left:50%; width:25px; height:25px; animation-delay:15s; animation-duration:45s; }
+    .circles li:nth-child(9){ left:20%; width:15px; height:15px; animation-delay:2s; animation-duration:35s; }
+    .circles li:nth-child(10){ left:85%; width:150px; height:150px; animation-duration:11s; }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+    }
+
+    /* === Sections === */
+    .section{ padding: clamp(40px, 5vh, 80px) 0; }
+    .container{ width: var(--container); margin-inline: auto; text-align: center; }
+    .section h2{ font-size: var(--step-h2); color: #4e54c8; margin: 0 0 16px; }
+    .section p{ margin: 0 auto 24px; max-width: 70ch; }
+
+    /* === Short Story split layout (text left, image right with fade) === */
+.story-split {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(360px, 60vh, 680px);
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* kiri-kanan sama besar */
+  align-items: center;
+  --story-img: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiOySF9NBGXBwHOLHkAAixKIdKxp9XSHKF0vlzscwEYHAVYvKd2dQWoDL2-jgmgn6ymhzhHEYFWfRk3mZzwxy_rPnl94VO3DUUIsC1EyZ7hfPVEP2gk8exKQwb4vD7TmsJtxhAFvLD_hxKtjBYdCMxdp9EJ151CV9pRazao0m3_aOupO6x0a2UqfsV1T4Y/s4000/IMG_20241003_182933.jpg');
+  background:
+    linear-gradient(to left, transparent 0%, rgba(249,249,251,.85) 35%, #f9f9fb 60%) right/60% 100% no-repeat,
+    var(--story-img) right center/60% 100% no-repeat;
+  background-color: #f9f9fb;
+}
+
+.story-split .story-text {
+  padding: 0 2rem; /* sebelumnya mungkin terlalu besar */
+  max-width: 700px;
+}
+
+
+.story-split .container{
+  width: var(--container);
+  margin-inline: auto;
+  padding: clamp(24px, 4vh, 48px) 0;
+}
+
+.story-text{
+  max-width: 60ch;
+  text-align: left;          /* rata kiri */
+}
+
+.story-text p{ margin: 0 0 14px; }
+
+/* MOBILE FIX: stack 1 kolom, gambar di belakang teks, teks lebar & nyaman dibaca */
+@media (max-width: 900px){
+  .story-split{
+    display: block;                     /* jangan 2 kolom di mobile */
+    min-height: unset;
+    /* gambar full + fade dari atas agar teks kebaca */
+    background:
+      linear-gradient(to bottom, rgba(249,249,251,.95) 0 45%, #f9f9fb 70%) center/100% 100% no-repeat,
+      var(--story-img) center/cover no-repeat;
+  }
+  .story-split .container{
+    width: var(--container);
+    padding: 28px 0 36px;
+  }
+  .story-text{
+    max-width: 70ch;                    /* lebar baris nyaman */
+    padding: 0 12px;                    /* rapat ke kiri dikit */
+    text-align: left;
+    line-height: 1.7;
+  }
+}
+
+/* EXTRA: layar sangat kecil, tambah ruang kiri-kanan sedikit */
+@media (max-width: 420px){
+  .story-text{ padding-inline: 14px; }
+}
+
+
+/* Responsive: di layar kecil, foto jadi cover di atas, teks tetap terbaca */
+@media (max-width: 800px){
+  .story-split{
+    background:
+      linear-gradient(to bottom, rgba(249,249,251,.92) 0 40%, #f9f9fb 60%) center/100% 100% no-repeat,
+      var(--story-img) center/cover no-repeat;
+    padding-top: 18vh; /* beri ruang agar gambar terlihat di atas */
+  }
+  .story-text{ max-width: 65ch; }
+}
+
+    /* === Gallery auto-fit === */
+    .gallery-grid{ display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .gallery-item img{ border-radius: var(--radius); box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+
+    /* === Footer === */
+    footer{ text-align:center; padding: 20px; font-size: .95rem; color: #6b7280; background: #f3f4f6; }
+
+    /* Accessibility: reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation: none !important; transition: none !important; }
+    }
+    /* Small devices fine-tune */
+    @media (max-width: 420px){
+      .btn{ width: 100%; }
+      .section p{ padding-inline: 12px; }
+    }
+
+   /* === Team Bubbles (random absolute) === */
+#kata-tim.section{
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+}
+
+.bubble-field{
+  position: relative;
+  width: var(--container);
+  height: min(70vh, 680px);   /* area bermain gelembung */
+  margin-inline: auto;
+  overflow: visible;          /* biar bayangan keliatan */
+}
+
+/* Gelembung */
+.bubble{
+  position: absolute;
+  --size: 96px;               /* akan dioverride via JS */
+  --posX: 0px;                /* akan dioverride via JS */
+  --posY: 0px;                /* akan dioverride via JS */
+  --dur: 6s;                  /* akan dioverride via JS */
+  --delay: 0s;                /* akan dioverride via JS */
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.35);
+  background: linear-gradient(145deg, rgba(255,255,255,.35), rgba(255,255,255,.15));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #1f2a6b;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08), inset 0 0 20px rgba(255,255,255,.22);
+  transition: transform .2s ease, box-shadow .2s ease;
+  animation: floatFree var(--dur) ease-in-out var(--delay) infinite;
+}
+
+/* partikel pecahan gelembung (fixed + di atas modal) */
+.bubble-piece {
+  position: fixed;
+  z-index: 60;
+  width: 10px;                 /* biar lebih keliatan */
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.6));
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);  /* kontras */
+  pointer-events: none;
+  animation: piece-burst 1.0s ease-out forwards; /* durasi sedikit lebih lama */
+}
+
+@keyframes piece-burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(1.0);
+    opacity: 0;
+  }
+}
+
+/* hover/focus */
+.bubble:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12), inset 0 0 24px rgba(255,255,255,.28);
+}
+.bubble:focus-visible{ outline: 3px solid #4e54c8; outline-offset: 3px; }
+
+/* animasi: posisi dasar + goyang vertikal kecil */
+@keyframes floatFree{
+  0%   { transform: translate(var(--posX), var(--posY)) translateY(0); }
+  50%  { transform: translate(var(--posX), var(--posY)) translateY(-14px); }
+  100% { transform: translate(var(--posX), var(--posY)) translateY(0); }
+}
+
+/* === Modal (Glass) === */
+.note-modal {
+  position: fixed; inset: 0; z-index: 50;
+  display: none; /* shown with .show */
+  place-items: center;
+  background: rgba(10, 16, 40, .35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 16px;
+}
+.note-modal.show { display: grid; }
+
+.note-card {
+  width: min(100% - 32px, 700px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: linear-gradient(145deg, rgba(255,255,255,.35), rgba(255,255,255,.18));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.18);
+  padding: 20px 20px 16px;
+  color: #0f1a4a;
+}
+
+.note-card h3{
+  margin: 0 0 8px;
+  font-size: clamp(1.1rem, 1rem + .6vw, 1.5rem);
+  color: #2b3180;
+}
+
+.note-card p{
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.note-actions{
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+.note-btn{
+  padding: .55rem .9rem; border-radius: 10px; border: 0; cursor: pointer;
+  font-weight: 700;
+}
+.note-btn.primary{ background: #4e54c8; color: #fff; }
+.note-btn.ghost{ background: rgba(255,255,255,.7); color: #1f2a6b; }
+
+/* respect user preference */
+@media (prefers-reduced-motion: reduce){
+  .bubble{ animation: none !important; }
+}
+
+/* efek menghilang untuk gelembung yang ditutup */
+.bubble {
+  transition: transform .35s ease, box-shadow .2s ease, opacity .35s ease; /* tambah opacity */
+}
+
+/* ====== Rolling gallery ====== */
+.gallery-marquee{
+  display: grid;
+  gap: 16px;
+  mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  overflow: hidden;
+}
+
+.track{
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  will-change: transform;
+  animation: scroll-left 35s linear infinite;
+  padding-block: 4px;
+}
+.track.reverse{
+  animation: scroll-right 38s linear infinite;
+}
+
+.item{
+  flex: 0 0 auto;
+  width: clamp(180px, 28vw, 320px);
+  height: clamp(120px, 18vw, 220px);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  transform: translateZ(0);
+}
+.item.tall{
+  height: clamp(180px, 26vw, 360px); /* variasi tinggi untuk ritme */
+}
+.item img{
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .35s ease, filter .35s ease;
+}
+
+/* zoom saat hover/focus */
+.item:hover img,
+.item:focus-within img{
+  transform: scale(1.08);
+  filter: saturate(1.05);
+}
+
+/* pause semua animasi saat user hover area galeri */
+.gallery-marquee:hover .track{
+  animation-play-state: paused;
+}
+
+/* keyframes */
+@keyframes scroll-left{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scroll-right{
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* mobile spacing */
+@media (max-width: 480px){
+  .gallery-marquee{ gap: 12px; }
+  .track{ gap: 10px; }
+}
+
+  </style>
+</head>
+<body class="lock-scroll">
+
+  <!-- HERO / OPENING -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Halo Tim</h1>
+      <p>Halaman kecil ini adalah bentuk apresiasi sebelum melangkah ke babak baru.</p>
+      <a href="#kata-1" class="btn">Lihat Perjalanan</a>
+    </div>
+    <div class="area">
+      <ul class="circles">
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Short Story: dipisah per section -->
+<section id="kata-1" class="section story-split">
+  <div class="container">
+    <h2>Cerita Pendek</h2>
+    <div class="story-text">
+      <p>“Masih teringat jelas hari pertama saat masuk ke perusahaan ini. Dulu, hanyalah seorang operator packing di Linen Center, sibuk dengan tumpukan linen dan jadwal kerja yang padat. Setiap hari rasanya sama — memeriksa, mengemas, memastikan semua rapi, lalu mengulanginya lagi.</p>
+      <p>Tapi, di balik rutinitas itu, ada rasa ingin tahu yang terus tumbuh. mulai tertarik dengan hal-hal baru, mencoba memahami sistem, mencatat ide, bahkan belajar hal yang sama sekali di luar jobdesc.</p>
+      <p>Perjalanan itu membawa ke tempat yang sama sekali berbeda. Dari belajar spreadsheet, membuat laporan, mengatur inventaris, sampai akhirnya memegang project-project besar: pemasangan sensor di Bandara Soetta, face recognition autogate, cek fisik digital, hingga pembuatan dashboard website interaktif.</p>
+      <p>Tidak pernah membayangkan bisa membangun sistem yang membantu tim bekerja lebih mudah. Apalagi sampai mengajar orang lain, berdiri di depan operator produksi Toyota Astra Motor untuk berbagi ilmu tentang teknologi.</p>
+      <p>Perusahaan ini bukan hanya tempat bekerja, tapi juga tempat tumbuh. Dari mengemas linen menjadi mengemas ide, dari merapikan barang menjadi merapikan data dan sistem. Dari operator, menjadi seorang yang percaya diri membangun sebuah website sederhana dari nol.</p>
+      <p>Terima kasih kepada semua yang pernah bekerja bersama, yang pernah sabar mengajar, memberi kesempatan, dan percaya bahwa bisa lebih dari yang terlihat di awal. Semua pelajaran, tawa, bahkan tekanan di sini, telah membentuk jadi seperti sekarang.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- KATA-KATA UNTUK TIM: tiap orang punya gelembung sendiri -->
+<section id="kata-tim" class="section">
+  <div class="container">
+    <h2>Kata-kata untuk Tim</h2>
+    <p>Terima kasih untuk kalian semua. Klik nama di gelembung untuk membaca pesan. 🫶</p>
+
+    <!-- area random floating -->
+    <div class="bubble-field" id="bubbleField" aria-label="Pesan untuk tim">
+      <button class="bubble" type="button"
+        data-name="Pak Alex"
+        data-note="Halo Pak Alex, terima kasih sebesar-besarnya atas kesempatan kerja yang pernah Bapak berikan. Mohon maaf kalau selama ini Alung belum bisa seperti yang diharapkan. Maaf juga kalau sering membuat ulah atau bertindak di luar batas. Tapi jujur, berada di perusahaan ini adalah bagian penting dari perjalanan hidup saya. Semoga perusahaan selalu maju, semakin sukses, dan tetap jadi rumah yang membanggakan.">
+        Pak Alex
+      </button>
+      <button class="bubble" type="button"
+        data-name="Bang Yogie"
+        data-note="Makasih banyak Bang Yogie atas kerja sama dan semua dukungannya. Maaf kalau selama ini jadi orang yang paling keras kepala di tim, bikin dampak yang kurang baik, atau kadang bikin onar. Maaf juga kalau sering denial atas perhatian dan dorongan yang Bang Yogie kasih.">
+        Bang Yogie
+      </button>
+      <button class="bubble" type="button"
+        data-name="Bang Hagi"
+        data-note="Tapi gi? Hehe… makasih udah selalu bikin suasana fun, udah mau repot-repot angkat gua ke RS awikwok. Jangan nampolin gua mulu gi, anying (canda). Semangat terus ya, Gi. Tetap jadi orang yang bisa bikin semua orang ketawa.">
+        Bang Hagi
+      </button>
+      <button class="bubble" type="button"
+        data-name="Arul"
+        data-note="E si Arul e… semangat rul! Sorry kalau gua sering jadi beban, aiiwkowkow. Udah jangan galau-galau mulu, coek. Mending kita gas makan nasi lemak bareng di Malaysia. Sukses terus ya!">
+        Arul
+      </button>
+      <button class="bubble" type="button"
+        data-name="Mas Septa"
+        data-note="Assalamualaikum, Mas Septa. Terima kasih sudah menjadi sosok yang selalu ada, bukan hanya sebagai rekan kerja, tapi juga teman berbagi cerita dan tawa. Makasih untuk semua bantuan, arahan, dan perhatian yang Mas berikan selama ini. Banyak momen yang nggak akan pernah Alung lupakan—dari kerja bareng sampai obrolan ringan yang bikin hari terasa lebih ringan. Semoga Mas selalu diberikan kesehatan, keberkahan, dan kemudahan dalam setiap langkah. Semoga juga semua cita-cita dan impian Mas bisa tercapai, dan Mas tetap jadi pribadi yang hangat serta menginspirasi banyak orang.">
+        Mas Septa
+      </button>
+      <button class="bubble" type="button"
+        data-name="Eri"
+        data-note="Asli… why not, Ri? Kata gua, mending gas aja Ri. Ibadah, pake referral aing biar pahalanya nyangkut ke gua. Hahaha. Semangat terus ya, Ri!">
+        Eri
+      </button>
+      <button class="bubble" type="button"
+        data-name="Ino"
+        data-note="Semangat No! Disini semua ide lu terbuka lebar. Jangan pernah ragu buat nyoba hal baru. Lu punya potensi besar, tinggal lu mau atau nggak buat nyalain apinya.">
+        Ino
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Modal untuk menampilkan pesan -->
+<div class="note-modal" id="noteModal" aria-hidden="true" role="dialog" aria-labelledby="noteTitle">
+  <div class="note-card" role="document">
+    <h3 id="noteTitle">Untuk Nama</h3>
+    <p id="noteBody">Pesan khusus akan tampil di sini.</p>
+    <div class="note-actions">
+      <button class="note-btn primary" type="button" data-close>Tutup</button>
+    </div>
+  </div>
+</div>
+
+  <!-- GALERI FOTO -->
+<section id="galeri" class="section">
+  <div class="container">
+    <h2>Galeri</h2>
+    <p>Beberapa potret kebersamaan.</p>
+
+    <div class="gallery-marquee">
+      <!-- Track 1: kiri -> kanan -->
+      <div class="track">
+        <!-- Ulangi set gambar dua kali agar loop mulus -->
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi51XelqGyMZfsWZ-6SxBYirgqC80svFo0ODMG-qefP0Q5d4fkVxW5LXXl_ZC6jf45Mn7_nnMbN1rV9w9mhPB1Zwsx2Y0G24QoFyvljDmZkW5bHj1lWMiNKYcrfkZLOf4TUiATB0tZQfqeDoYNhgzJYCfBlg8w8axSsGPyBDiEW1i6vpeGe5lkCykFc4f4/s1600/IMG-20230610-WA0022.jpg" alt="momen 1"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgqieY1yC4IH_GzpKPAKV9SkN5aX4QjdSGvT_lbLF5MBx5lNK9sMI93n20uQavTiCOh_q_mGLvLgIx9i3yQ3bHECOwUObpHeldKDRGbBnfFJHliajvZANiL2Aw1eB5Z3OodXAR927r5OqrWvnuXIOi1Udb3Mq6YaB9GACQQvTDwWA5hnVZv_CQf2de8GJY/s320/IMG-20230713-WA0027.jpeg" alt="momen 2"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJXpS-E2CbVVMlmhh3LyikxMTbysXJ_wVUHeD1OK2DO0H181WCP2_gvM-7tuxS01EvkvZxQyIFB-wNgHSDGcu-1eO00SydUaZVU99ipA0jtWb-WdRkEh2PvdTQQdFE0qMzu1Ce7Fm9zak8Dux7doZZ8USaYWJ2NjA-Gr5ApXXsAAjKbpLCZpv13EScMb8/s1080/6281287752791_status_0727063c18ad4abe97d710e171afc9f9.jpg" alt="momen 3"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0coQa7jWM4P2GDV7r9r1wUhmSRASJJOV3kDo-_Q1JWPdc528BjcrIG7BIWwVpaWRa09OpCuCf4JrADCKFX_yTDi5Qlkd9JWB580peyccR1emyqLGyaTadYh8XZjPLeZlX4iXDmO3yNGH2a97vEevHD6e0dkfLJGUtV95AVNQtsM4nYJ5UE53zRPu426Y/s1600/IMG-20230818-WA0049.jpg" alt="momen 4"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjc23Qy-R6wcNG6RBFH3YWXiLC1WzAN3Ut57hDCCj8vX3lnEg8wC8M646BLlGW0VZtd_enN_C9VH7QukNh8cvsQDHlbocsrE4D1aRkRwP31bgwDu0LjhtwZZDo9o6LsFuYOL9ERpiiiU3T_-m9WgopR37rBiDHDApNIrsjaJkxp37R5oqP0lZnXwuZWTAs/s320/IMG-20230824-WA0023.jpg" alt="momen 5"></div>
+
+        <!-- repeat -->
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi51XelqGyMZfsWZ-6SxBYirgqC80svFo0ODMG-qefP0Q5d4fkVxW5LXXl_ZC6jf45Mn7_nnMbN1rV9w9mhPB1Zwsx2Y0G24QoFyvljDmZkW5bHj1lWMiNKYcrfkZLOf4TUiATB0tZQfqeDoYNhgzJYCfBlg8w8axSsGPyBDiEW1i6vpeGe5lkCykFc4f4/s1600/IMG-20230610-WA0022.jpg" alt="momen 1 (duplikat)"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgqieY1yC4IH_GzpKPAKV9SkN5aX4QjdSGvT_lbLF5MBx5lNK9sMI93n20uQavTiCOh_q_mGLvLgIx9i3yQ3bHECOwUObpHeldKDRGbBnfFJHliajvZANiL2Aw1eB5Z3OodXAR927r5OqrWvnuXIOi1Udb3Mq6YaB9GACQQvTDwWA5hnVZv_CQf2de8GJY/s320/IMG-20230713-WA0027.jpeg" alt="momen 2 (duplikat)"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJXpS-E2CbVVMlmhh3LyikxMTbysXJ_wVUHeD1OK2DO0H181WCP2_gvM-7tuxS01EvkvZxQyIFB-wNgHSDGcu-1eO00SydUaZVU99ipA0jtWb-WdRkEh2PvdTQQdFE0qMzu1Ce7Fm9zak8Dux7doZZ8USaYWJ2NjA-Gr5ApXXsAAjKbpLCZpv13EScMb8/s1080/6281287752791_status_0727063c18ad4abe97d710e171afc9f9.jpg" alt="momen 3 (duplikat)"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0coQa7jWM4P2GDV7r9r1wUhmSRASJJOV3kDo-_Q1JWPdc528BjcrIG7BIWwVpaWRa09OpCuCf4JrADCKFX_yTDi5Qlkd9JWB580peyccR1emyqLGyaTadYh8XZjPLeZlX4iXDmO3yNGH2a97vEevHD6e0dkfLJGUtV95AVNQtsM4nYJ5UE53zRPu426Y/s1600/IMG-20230818-WA0049.jpg" alt="momen 4 (duplikat)"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjc23Qy-R6wcNG6RBFH3YWXiLC1WzAN3Ut57hDCCj8vX3lnEg8wC8M646BLlGW0VZtd_enN_C9VH7QukNh8cvsQDHlbocsrE4D1aRkRwP31bgwDu0LjhtwZZDo9o6LsFuYOL9ERpiiiU3T_-m9WgopR37rBiDHDApNIrsjaJkxp37R5oqP0lZnXwuZWTAs/s320/IMG-20230824-WA0023.jpg" alt="momen 5 (duplikat)"></div>
+      </div>
+
+      <!-- Track 2: kanan -> kiri -->
+      <div class="track reverse">
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3bLkvZg4ors9CKBWuSeJyEeFboknMAtnIfYLSIa-Phnwoy1VB37lSBCbwZVefHeccEa0S8oo89vVXbK1Zm8c-9aQhG5r83DWWKNlXQzVrxD-oE-3OfQkRy40s8IrGvcwegevTc9NSRErpwBxhgricu6JcBF9l3u5a0imoyEZUuefAvvxrRTzZuE5pjDA/s320/IMG-20230831-WA0029.jpg" alt="momen 6"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2FJ6VFmCGxDnkzitNlrYf2G1KnPlhmIw3okfd1IfKiYpAC8anijUs0a1RN2qbOevG_Te1Gdd_9OndruWzQTWjwr9ZXrSBrB8Rt1fyu_jq0jj5H5sHif3PRspHSQuVtxqerA-DdddrSoSUKX1Kfy_cZMCoED2yerMmhz55FGybuG8sbQyd0JGn4-9SblE/s320/IMG_20230816_115414.jpg" alt="momen 7"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVpfnjsoZCW7ZgJMPEpiqYYw1lX8p1v-Iz1VSsKMQoYuGU0hyphenhyphen7z6x_QAP_9JQHC7Vm0NjgDcWRt-XqI_0d1LnrBVmVMpzLRr_LXf1n2t00kpo3zH5aSVJccW0wU1yti-dHZggFCWD2A1DsSB5MI2HD7HVnM5jKTsNYl1IXZ6dQZ5zhFrvtLe28TNtMFFM/s1600/IMG-20230910-WA0039.jpg" alt="momen 8"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1dEbp5JrEn5lapc7WJDKVsWqtScXwpIUDZLrnTdzL5x3m3jhmEkb1SbqXPFpR8prRDyiDE9k4zw3iemVoqOyZDgfav_dZM1E3cYhf6_AYpLVNhsnfl_TZ0SYG8WFQWZxpc7D2CKz7_sCotR9s7zuueAEUfwfMZy9LR0949jCX9NSAKA4YSQwYXeYazMU/s320/IMG_20231021_140352.jpg" alt="momen 9"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfWcW2toPgUAK30bKKEds5F9wG8iQNyMphOsMbFEwIPR4M-ZbAPg8T20S-hNF7VdyaXmWKeC13Uv5_UmleLYz8dMeJIw3NkbodDocrzZNrMYIICtax45uC6yWJpAB5JZ2pVwCZBT5izzVJ6445F00hQUogjUNsQPrSakZKv9zL7RNT1M9VAhri5fJXr4o/s320/IMG_20230905_125121.jpg" alt="momen 10"></div>
+
+        <!-- repeat -->
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3bLkvZg4ors9CKBWuSeJyEeFboknMAtnIfYLSIa-Phnwoy1VB37lSBCbwZVefHeccEa0S8oo89vVXbK1Zm8c-9aQhG5r83DWWKNlXQzVrxD-oE-3OfQkRy40s8IrGvcwegevTc9NSRErpwBxhgricu6JcBF9l3u5a0imoyEZUuefAvvxrRTzZuE5pjDA/s320/IMG-20230831-WA0029.jpg" alt="momen 6 (duplikat)"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2FJ6VFmCGxDnkzitNlrYf2G1KnPlhmIw3okfd1IfKiYpAC8anijUs0a1RN2qbOevG_Te1Gdd_9OndruWzQTWjwr9ZXrSBrB8Rt1fyu_jq0jj5H5sHif3PRspHSQuVtxqerA-DdddrSoSUKX1Kfy_cZMCoED2yerMmhz55FGybuG8sbQyd0JGn4-9SblE/s320/IMG_20230816_115414.jpg" alt="momen 7 (duplikat)"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVpfnjsoZCW7ZgJMPEpiqYYw1lX8p1v-Iz1VSsKMQoYuGU0hyphenhyphen7z6x_QAP_9JQHC7Vm0NjgDcWRt-XqI_0d1LnrBVmVMpzLRr_LXf1n2t00kpo3zH5aSVJccW0wU1yti-dHZggFCWD2A1DsSB5MI2HD7HVnM5jKTsNYl1IXZ6dQZ5zhFrvtLe28TNtMFFM/s1600/IMG-20230910-WA0039.jpg" alt="momen 8 (duplikat)"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1dEbp5JrEn5lapc7WJDKVsWqtScXwpIUDZLrnTdzL5x3m3jhmEkb1SbqXPFpR8prRDyiDE9k4zw3iemVoqOyZDgfav_dZM1E3cYhf6_AYpLVNhsnfl_TZ0SYG8WFQWZxpc7D2CKz7_sCotR9s7zuueAEUfwfMZy9LR0949jCX9NSAKA4YSQwYXeYazMU/s320/IMG_20231021_140352.jpg" alt="momen 9 (duplikat)"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfWcW2toPgUAK30bKKEds5F9wG8iQNyMphOsMbFEwIPR4M-ZbAPg8T20S-hNF7VdyaXmWKeC13Uv5_UmleLYz8dMeJIw3NkbodDocrzZNrMYIICtax45uC6yWJpAB5JZ2pVwCZBT5izzVJ6445F00hQUogjUNsQPrSakZKv9zL7RNT1M9VAhri5fJXr4o/s320/IMG_20230905_125121.jpg" alt="momen 10 (duplikat)"></div>
+      </div>
+
+      <!-- Track 3: kiri -> kanan -->
+      <div class="track">
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbHZnoqUKPQV4hMZxPPGRzvnA81zBDDuxkViOP3ISDvoLdDpkZNfig6LN7G6lKjI40sXaEntPjqnYsrpRa0ZO5PDqi1ZL4ayJAz7iV2QZz0jcL3LxO4b_VG4aZYKh84iPXpIV9_DWg3E0jVdbEATJ7XMrry1Sab3Y10Ni32hzUS6a5hUfrdpI87eXb-Rs/s320/IMG_20240216_104328.jpg" alt="momen 11"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRXJ8zTr3Cp5kr6qDSTRiNsiEB2Xdr2Wme5srmC290rwVITlAiN47wDf8t7RgwOI71gTeAit6_3PBh8qpcIbQIbleviAuyHnAPum5rdLB8KgMb9J6iOjssvwjDcpR5LGkpTazjfRaNIr10skp_8CZ8GQTpGm6j6gv8McBiYsWhMsU0a89c-owkhmvOxHU/s1080/FB_IMG_1729902204716.jpg" alt="momen 12"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyKGm4kQmurr9X8v85CV53KmcBE_D-9lNb2tgS7h31jC3OSZM9wNLIrZ-cG_D269yqTxQyY5hfNCGtkUMqMzcHILstA4b3UnuOhL6V5o_HzjmEcyP6vxQ5h6qZMPH0YXQ5vFtUU1eGK7dZIAOA7E6G050MHvtnmRcLBVeDmCrMbZZEdcGLrxWm6irgOss/s5184/IMG_20250511_090235.jpg" alt="momen 13"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEJaQUqf8MWB2lZJKbCrOw7xpB39XoKDW5hY77uWNz7S2m4eIN0EqM1m9zeLn38RsmYnsDtoLksHdXwHwUDvsgAGg6LaVkGk2Tk-QiZfbKxo0Tq9EspcAbPqpk_N5H8lYkw7Fzcl48Z0DTXkL0cfaeBiRa-sdWWfKC_1EucYE9h2MaigG_9NITvreBXng/s5184/MVIMG_20250526_072700.jpg" alt="momen 14"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0ua9tH0SLxiHnP97P_vDJ_th1pS2JmolZ2LIDNLmiGarYGzHW3dbOlMcQzFfx6bIyBbdxAtuDLOjKR_YKlRkF05ZTxZhDEdRA_AxjNXksIppUcSICViTjuldvJH2etVyf_sOEdFGEXRISENdaebtcDF1PcEazNFnCHFoZoUwCHGdn8S-Dc3KqY8v6vBQ/s320/MVIMG_20250721_153905.jpg" alt="momen 15"></div>
+
+        <!-- repeat -->
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbHZnoqUKPQV4hMZxPPGRzvnA81zBDDuxkViOP3ISDvoLdDpkZNfig6LN7G6lKjI40sXaEntPjqnYsrpRa0ZO5PDqi1ZL4ayJAz7iV2QZz0jcL3LxO4b_VG4aZYKh84iPXpIV9_DWg3E0jVdbEATJ7XMrry1Sab3Y10Ni32hzUS6a5hUfrdpI87eXb-Rs/s320/IMG_20240216_104328.jpg" alt="momen 11 (duplikat)"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRXJ8zTr3Cp5kr6qDSTRiNsiEB2Xdr2Wme5srmC290rwVITlAiN47wDf8t7RgwOI71gTeAit6_3PBh8qpcIbQIbleviAuyHnAPum5rdLB8KgMb9J6iOjssvwjDcpR5LGkpTazjfRaNIr10skp_8CZ8GQTpGm6j6gv8McBiYsWhMsU0a89c-owkhmvOxHU/s1080/FB_IMG_1729902204716.jpg" alt="momen 12 (duplikat)"></div>
+        <div class="item tall"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyKGm4kQmurr9X8v85CV53KmcBE_D-9lNb2tgS7h31jC3OSZM9wNLIrZ-cG_D269yqTxQyY5hfNCGtkUMqMzcHILstA4b3UnuOhL6V5o_HzjmEcyP6vxQ5h6qZMPH0YXQ5vFtUU1eGK7dZIAOA7E6G050MHvtnmRcLBVeDmCrMbZZEdcGLrxWm6irgOss/s5184/IMG_20250511_090235.jpg" alt="momen 13 (duplikat)"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEJaQUqf8MWB2lZJKbCrOw7xpB39XoKDW5hY77uWNz7S2m4eIN0EqM1m9zeLn38RsmYnsDtoLksHdXwHwUDvsgAGg6LaVkGk2Tk-QiZfbKxo0Tq9EspcAbPqpk_N5H8lYkw7Fzcl48Z0DTXkL0cfaeBiRa-sdWWfKC_1EucYE9h2MaigG_9NITvreBXng/s5184/MVIMG_20250526_072700.jpg" alt="momen 14 (duplikat)"></div>
+        <div class="item"><img loading="lazy" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0ua9tH0SLxiHnP97P_vDJ_th1pS2JmolZ2LIDNLmiGarYGzHW3dbOlMcQzFfx6bIyBbdxAtuDLOjKR_YKlRkF05ZTxZhDEdRA_AxjNXksIppUcSICViTjuldvJH2etVyf_sOEdFGEXRISENdaebtcDF1PcEazNFnCHFoZoUwCHGdn8S-Dc3KqY8v6vBQ/s320/MVIMG_20250721_153905.jpg" alt="momen 15 (duplikat)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- VIDEO KENANGAN (section sendiri) -->
+  <section id="video" class="section">
+    <div class="container">
+      <h2>Video</h2>
+      <p>Video ini merangkum momen-momen berharga yang kita lalui bersama.</p>
+      <iframe
+  id="ytPlayer"
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1"
+  title="Video Kenangan"
+  allow="autoplay; encrypted-media"
+  allowfullscreen>
+</iframe>
+    </div>
+  </section>
+
+  <!-- PENUTUP (section sendiri) -->
+  <section id="penutup" class="section">
+    <div class="container">
+      <h2>Sampai Bertemu Lagi</h2>
+      <p>Perpisahan hanyalah jeda dari pertemuan berikutnya. Terima kasih telah menjadi bagian dari perjalanan ini. Semoga kita semua menemukan kebahagiaan di jalan kita masing-masing.</p>
+      <p>Dengan penuh cinta dan hormat,<br><strong>Main Character</strong></p>
+    </div>
+  </section>
+
+  <footer>&copy; 2025 — Terima kasih dan semoga kita bertemu lagi 🌸</footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Lock scroll on first view
+      document.body.classList.add('lock-scroll');
+      const trigger = document.querySelector('a[href="#kata-1"]');
+      if (trigger){
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.body.classList.remove('lock-scroll');
+          document.querySelector('#kata-1')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+
+
+
+(function(){
+  const rand = (min, max) => Math.random() * (max - min) + min;
+  document.querySelectorAll('.bubble').forEach((el, i) => {
+    const size = Math.round(rand(78, 128));          // px
+    const delay = rand(0, 1.5).toFixed(2) + 's';     // 0s – 1.5s
+    const dur = rand(5.5, 8.5).toFixed(2) + 's';     // 5.5s – 8.5s
+    const drift = rand(-8, 8).toFixed(0) + 'px';     // -8px – 8px
+
+    el.style.setProperty('--size', size + 'px');
+    el.style.setProperty('--dur', dur);
+    el.style.animationDelay = delay;
+    el.style.setProperty('--tx', drift);
+  });
+})();
+
+(function(){
+  const field = document.getElementById('bubbleField');
+  if (!field) return;
+
+  const bubbles = [...field.querySelectorAll('.bubble')];
+
+  function rand(min, max){ return Math.random() * (max - min) + min; }
+
+  function layout(){
+  const rect = field.getBoundingClientRect();
+  const W = rect.width;
+  const H = rect.height;
+  const padding = 8;
+
+  const placed = []; // simpan posisi & ukuran bubble yang sudah ditaruh
+
+  function isOverlapping(x, y, size){
+    for (let p of placed){
+      const dx = x - p.x;
+      const dy = y - p.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < (size/2 + p.size/2 + 12)) return true; // 12px jarak aman
+    }
+    return false;
+  }
+
+  bubbles.forEach(b => {
+    let size, x, y;
+    let tries = 0;
+    do {
+      size = Math.round(rand(78, 140));        
+      const maxX = Math.max(0, W - size - padding);
+      const maxY = Math.max(0, H - size - padding);
+      x = Math.round(rand(padding, maxX));
+      y = Math.round(rand(padding, maxY));
+      tries++;
+      if (tries > 200) break; // kalau udah nyoba banyak kali, stop biar ga infinite loop
+    } while (isOverlapping(x, y, size));
+
+    // simpan data
+    placed.push({x, y, size});
+
+    // terapkan style
+    b.style.setProperty('--size', size + 'px');
+    b.style.setProperty('--posX', x + 'px');
+    b.style.setProperty('--posY', y + 'px');
+    b.style.setProperty('--dur', rand(5.5, 9.0).toFixed(2) + 's');
+    b.style.setProperty('--delay', rand(0, 1.6).toFixed(2) + 's');
+  });
+}
+
+  // initial layout
+  layout();
+
+  // re-layout on resize (debounced)
+  let t;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(layout, 150);
+  });
+})();
+
+// Interaksi gelembung -> modal (dengan penghilangan gelembung saat ditekan Tutup)
+(() => {
+  const modal = document.getElementById('noteModal');
+  const title = document.getElementById('noteTitle');
+  const body  = document.getElementById('noteBody');
+
+  let currentBubble = null; // gelembung yang sedang dibuka
+
+  function openModal(name, note, bubbleEl){
+    currentBubble = bubbleEl || null;
+    title.textContent = `Untuk ${name}`;
+    body.textContent = note;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+function closeModal(removeBubble = false){
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden', 'true');
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+
+  if (removeBubble && currentBubble){
+    // Ambil posisi & ukuran gelembung
+    const rect = currentBubble.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Buat 8 partikel
+    for (let i = 0; i < 8; i++){
+      const piece = document.createElement('div');
+      piece.className = 'bubble-piece';
+      piece.style.left = `${centerX}px`;
+      piece.style.top = `${centerY}px`;
+
+      // Gerak acak partikel
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 60 + 20; // jarak 20–80px
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+
+      piece.style.setProperty('--tx', `${tx}px`);
+      piece.style.setProperty('--ty', `${ty}px`);
+
+      document.body.appendChild(piece);
+
+      // Hapus partikel setelah animasi selesai
+      setTimeout(() => piece.remove(), 650);
+    }
+
+    // Hapus gelembung asli
+    currentBubble.remove();
+  }
+
+  currentBubble = null;
+}
+
+  document.addEventListener('click', (e) => {
+    // Klik gelembung -> buka modal & simpan referensi gelembungnya
+    const bub = e.target.closest('.bubble');
+    if (bub){
+      openModal(
+        bub.getAttribute('data-name') || 'Teman',
+        bub.getAttribute('data-note') || '',
+        bub
+      );
+      return;
+    }
+
+    // Klik tombol close -> tutup modal + pecahkan bubble yang sedang dibuka
+if (e.target.closest('[data-close]')) {
+  const bub = currentBubble;     // simpan ref dulu
+  if (bub) {
+    const rect = bub.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+
+    const pieces = 14; // lebih rame
+    for (let i = 0; i < pieces; i++){
+      const piece = document.createElement('div');
+      piece.className = 'bubble-piece';
+      piece.style.left = `${cx - 5}px`;   // center
+      piece.style.top  = `${cy - 5}px`;
+
+      const angle = Math.random() * 2 * Math.PI;
+      const dist  = Math.random() * 100 + 30; // 30–130px, lebih jauh
+      piece.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+      piece.style.setProperty('--ty', `${Math.sin(angle) * dist}px`);
+
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 950); // sesuai durasi anim
+    }
+
+    bub.remove(); // hilangkan bubble dari layar
+  }
+
+  // baru tutup modalnya (biar ledakan keliatan di atas modal)
+  const modal = document.getElementById('noteModal');
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden', 'true');
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+  currentBubble = null;
+  return;
+}
+
+
+    // Klik overlay di luar card -> tutup modal tanpa menghilangkan gelembung
+    if (e.target === modal) {
+      closeModal(false);
+    }
+  });
+
+  // ESC -> hanya tutup modal (tanpa menghilangkan gelembung)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(false);
+  });
+})();
+
+/* ===== Background Music Controller ===== */
+
+(function(){
+  // Ganti dengan 7 file ID Google Drive milikmu (bisa MP3/M4A/OGG)
+const rawOneDriveLinks = [
+  "https://1drv.ms/u/c/61808bcd636f067f/ETqYGwf1gMVCogVkxSUKc4kBZ1yh3piu_J73LNllJKhffg?e=bGAJfI",
+  "https://1drv.ms/u/c/61808bcd636f067f/EXNUMYtd9pZGiFGlLPxIWJgBx0t00IQRvNihz0-ML-sknw?e=WlnJtE",
+  "https://1drv.ms/u/c/61808bcd636f067f/EZh-ItMDokpGoWoDh4OVTA8BIPDFQi2tTOpFCASY_BwRyw?e=Lfvb4A",
+  "https://1drv.ms/u/c/61808bcd636f067f/ETvPkoCXfx5FmjXQOyyEY60Bc2mLD5EAdnjMqBKc0exrjw?e=8RDLcd",
+  "https://1drv.ms/u/c/61808bcd636f067f/EdvnR9SxdAJFiVdsDHvs5A8BCScjoUO8pezy49eCQJx7VA?e=CGTOpn",
+  "https://1drv.ms/u/c/61808bcd636f067f/EbaB8UyvUFVBlRsU-6MpuvIBL4AWZTHM01xwKUtyBLhFNw?e=waq9NH",
+  "https://1drv.ms/u/c/61808bcd636f067f/EfuzT8o77GdFmWHDros88p4BSAUuZkoBW6m-Xk7HcheDOA?e=mPKnsg"
+];
+function oneDriveDirect(url){
+  const b64 = btoa(unescape(encodeURIComponent(url)))
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  return `https://api.onedrive.com/v1.0/shares/u!${b64}/root/content`;
+}
+
+const tracks = rawOneDriveLinks.map(oneDriveDirect);
+  // Config
+  const TARGET_VOLUME = 0.6;   // volume akhir
+  const FADE_MS       = 900;   // durasi fade in/out
+  const AUTOPLAY_HINT = true;  // tampilkan tombol play kalau autoplay ditolak
+
+  let audio;
+  let lastIndex = -1;
+  let fadeTimer = null;
+
+  // Buat tombol kecil kalau autoplay ditolak
+  const makePlayHint = () => {
+    if (!AUTOPLAY_HINT) return null;
+    let btn = document.getElementById('bgmPlayBtn');
+    if (btn) return btn;
+    btn = document.createElement('button');
+    btn.id = 'bgmPlayBtn';
+    btn.textContent = '🔊 Play music';
+    Object.assign(btn.style, {
+      position:'fixed', right:'12px', bottom:'12px', zIndex:'99',
+      padding:'10px 12px', borderRadius:'10px', border:'0',
+      fontWeight:'700', background:'#4e54c8', color:'#fff',
+      boxShadow:'0 6px 16px rgba(0,0,0,.15)', cursor:'pointer'
+    });
+    document.body.appendChild(btn);
+    btn.addEventListener('click', async () => {
+      try{
+        await startBGM(true);
+        btn.remove();
+      }catch(err){
+        console.warn('User-gesture play failed:', err);
+      }
+    });
+    return btn;
+  };
+
+  const pickRandomIndex = () => {
+    if (tracks.length <= 1) return 0;
+    let i;
+    do { i = Math.floor(Math.random() * tracks.length); }
+    while (i === lastIndex);
+    lastIndex = i;
+    return i;
+  };
+
+  const setSrcAndPlay = async () => {
+    const i = pickRandomIndex();
+    audio.src = tracks[i];
+    audio.currentTime = 0;
+    await audio.play();
+  };
+
+  const fadeTo = (targetVol, ms) => {
+    clearInterval(fadeTimer);
+    const steps = Math.max(1, Math.floor(ms / 50));
+    const start = audio.volume;
+    let n = 0;
+    fadeTimer = setInterval(() => {
+      n++;
+      const v = start + (targetVol - start) * (n/steps);
+      audio.volume = Math.min(1, Math.max(0, v));
+      if (n >= steps) clearInterval(fadeTimer);
+    }, 50);
+  };
+
+  async function startBGM(forceUserGesture=false){
+    if (!audio){
+      audio = new Audio();
+      audio.preload = 'auto';
+      audio.crossOrigin = 'anonymous';
+      audio.volume = 0;
+      // Jangan loop; biar ganti lagu random saat ended:
+      audio.loop = false;
+
+      audio.addEventListener('ended', async () => {
+        try{
+          await setSrcAndPlay();
+        }catch(e){
+          console.warn('Autoplay next failed:', e);
+          makePlayHint();
+        }
+      });
+    }
+
+    try{
+      await setSrcAndPlay();
+      fadeTo(TARGET_VOLUME, FADE_MS);
+    }catch(err){
+      // Autoplay ditolak
+      if (!forceUserGesture) makePlayHint();
+      throw err;
+    }
+  }
+
+  function pauseBGM(){
+    if (!audio) return;
+    fadeTo(0, FADE_MS);
+    setTimeout(() => { if (audio) audio.pause(); }, FADE_MS);
+  }
+
+  async function resumeBGM(){
+    if (!audio) return;
+    try{
+      await audio.play();
+      fadeTo(TARGET_VOLUME, FADE_MS);
+    }catch(err){
+      makePlayHint();
+    }
+  }
+
+  // Mulai coba autoplay setelah load (akan ditolak di iOS/Chrome tanpa gesture)
+  window.addEventListener('load', () => {
+    startBGM().catch(()=>{ /* tombol hint akan muncul */ });
+  });
+
+  // ==== Sinkron dengan <video> HTML native ====
+  document.addEventListener('play', (e) => {
+    if (e.target && e.target.tagName === 'VIDEO') pauseBGM();
+  }, true);
+  document.addEventListener('pause', (e) => {
+    if (e.target && e.target.tagName === 'VIDEO') resumeBGM();
+  }, true);
+
+  // ==== Sinkron dengan YouTube Iframe ====
+  // 1) muat API
+  const ytTag = document.createElement('script');
+  ytTag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(ytTag);
+
+  let ytPlayer = null;
+  window.onYouTubeIframeAPIReady = function(){
+    const iframe = document.getElementById('ytPlayer');
+    if (!iframe) return;
+    ytPlayer = new YT.Player('ytPlayer', {
+      events: {
+        onStateChange: function(ev){
+          // 1=playing, 2=paused, 0=ended
+          if (ev.data === YT.PlayerState.PLAYING) pauseBGM();
+          if (ev.data === YT.PlayerState.PAUSED || ev.data === YT.PlayerState.ENDED) resumeBGM();
+        }
+      }
+    });
+  };
+
+  // Opsional: kalau user pertama kali klik di mana pun, coba start (buat iOS/Chrome)
+  window.addEventListener('click', () => {
+    if (!audio || audio.paused) startBGM(true).catch(()=>{});
+  }, { once:true });
+
+})();
+  </script>
+</body>
+</html>
