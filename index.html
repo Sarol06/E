@@ -368,6 +368,48 @@
   .track{ gap: 10px; }
 }
 
+/* === Scroll reveal === */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(.98);
+  transition:
+    opacity .6s ease,
+    transform .6s cubic-bezier(.2,.65,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.reveal.up    { transform: translateY(26px) scale(.98); }
+.reveal.left  { transform: translateX(-28px) scale(.98); }
+.reveal.right { transform: translateX(28px)  scale(.98); }
+
+/* === Modal pop-in saat buka pesan === */
+.note-modal { transition: opacity .28s ease; }
+.note-modal.show { opacity: 1; }
+.note-card {
+  opacity: 0;
+  transform: translateY(10px) scale(.96);
+}
+.note-card.pop-in {
+  animation: note-pop .36s cubic-bezier(.21,1,.21,1) forwards;
+}
+@keyframes note-pop {
+  0%   { opacity:0; transform: translateY(10px) scale(.96); }
+  60%  { opacity:1; transform: translateY(0)    scale(1.02); }
+  100% { opacity:1; transform: translateY(0)    scale(1); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .reveal, .reveal.in, .note-card, .note-card.pop-in {
+    transition:none !important; animation:none !important;
+    opacity:1 !important; transform:none !important;
+  }
+}
+
+
   </style>
 </head>
 <body class="lock-scroll">
@@ -388,7 +430,7 @@
   </section>
 
   <!-- Short Story: dipisah per section -->
-<section id="kata-1" class="section story-split">
+<section id="kata-1" class="section story-split reveal up">
   <div class="container">
     <h2>Cerita Pendek</h2>
     <div class="story-text">
@@ -403,7 +445,7 @@
 </section>
 
 <!-- KATA-KATA UNTUK TIM: tiap orang punya gelembung sendiri -->
-<section id="kata-tim" class="section">
+<section id="kata-tim" class="section reveal up">
   <div class="container">
     <h2>Kata-kata untuk Tim</h2>
     <p>Terima kasih untuk kalian semua. Klik nama di gelembung untuk membaca pesan. 🫶</p>
@@ -461,7 +503,7 @@
 </div>
 
   <!-- GALERI FOTO -->
-<section id="galeri" class="section">
+<section id="galeri" class="section reveal up">
   <div class="container">
     <h2>Galeri</h2>
     <p>Beberapa potret kebersamaan.</p>
@@ -521,7 +563,7 @@
 
 
   <!-- VIDEO KENANGAN (section sendiri) -->
-  <section id="video" class="section">
+  <section id="video" class="section reveal up">
     <div class="container">
       <h2>Video</h2>
       <p>Video ini merangkum momen-momen berharga yang kita lalui bersama.</p>
@@ -536,7 +578,7 @@
   </section>
 
   <!-- PENUTUP (section sendiri) -->
-  <section id="penutup" class="section">
+  <section id="penutup" class="section reveal up">
     <div class="container">
       <h2>Sampai Bertemu Lagi</h2>
       <p>Perpisahan hanyalah jeda dari pertemuan berikutnya. Terima kasih telah menjadi bagian dari perjalanan ini. Semoga kita semua menemukan kebahagiaan di jalan kita masing-masing.</p>
@@ -655,6 +697,11 @@
     modal.setAttribute('aria-hidden', 'false');
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
+
+      const card = modal.querySelector('.note-card');
+  card.classList.remove('pop-in'); // reset kalau pernah dibuka
+  requestAnimationFrame(() => card.classList.add('pop-in'));
+
   }
 
 function closeModal(removeBubble = false){
@@ -764,22 +811,17 @@ if (e.target.closest('[data-close]')) {
 
 (function(){
   // Ganti dengan 7 file ID Google Drive milikmu (bisa MP3/M4A/OGG)
-const rawOneDriveLinks = [
-  "https://1drv.ms/u/c/61808bcd636f067f/ETqYGwf1gMVCogVkxSUKc4kBZ1yh3piu_J73LNllJKhffg?e=bGAJfI",
-  "https://1drv.ms/u/c/61808bcd636f067f/EXNUMYtd9pZGiFGlLPxIWJgBx0t00IQRvNihz0-ML-sknw?e=WlnJtE",
-  "https://1drv.ms/u/c/61808bcd636f067f/EZh-ItMDokpGoWoDh4OVTA8BIPDFQi2tTOpFCASY_BwRyw?e=Lfvb4A",
-  "https://1drv.ms/u/c/61808bcd636f067f/ETvPkoCXfx5FmjXQOyyEY60Bc2mLD5EAdnjMqBKc0exrjw?e=8RDLcd",
-  "https://1drv.ms/u/c/61808bcd636f067f/EdvnR9SxdAJFiVdsDHvs5A8BCScjoUO8pezy49eCQJx7VA?e=CGTOpn",
-  "https://1drv.ms/u/c/61808bcd636f067f/EbaB8UyvUFVBlRsU-6MpuvIBL4AWZTHM01xwKUtyBLhFNw?e=waq9NH",
-  "https://1drv.ms/u/c/61808bcd636f067f/EfuzT8o77GdFmWHDros88p4BSAUuZkoBW6m-Xk7HcheDOA?e=mPKnsg"
+const tracks = [
+    "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/antent%20-%20hope%20to%20see%20you%20again.mp3",
+  "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/daniel.mp3%20-%20green%20to%20blue.mp3",
+  "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/%C3%B8neheart%20x%20reidenshi%20-%20snowfall.mp3",
+  "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/Emile%20Mosseri%20-%20Jacob%20and%20the%20Stone%20_%20Minari%20(Original%20Motion%20Picture%20Soundtrack).mp3",
+  "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/Misty%20Dissolve%20(feat.%20ILAMZOXSY).mp3",
+  "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/New%20Home.mp3",
+  "https://raw.githubusercontent.com/Sarol06/E/main/assets/audio/Ethereal.mp3",
+  
 ];
-function oneDriveDirect(url){
-  const b64 = btoa(unescape(encodeURIComponent(url)))
-    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-  return `https://api.onedrive.com/v1.0/shares/u!${b64}/root/content`;
-}
 
-const tracks = rawOneDriveLinks.map(oneDriveDirect);
   // Config
   const TARGET_VOLUME = 0.6;   // volume akhir
   const FADE_MS       = 900;   // durasi fade in/out
@@ -792,17 +834,7 @@ const tracks = rawOneDriveLinks.map(oneDriveDirect);
   // Buat tombol kecil kalau autoplay ditolak
   const makePlayHint = () => {
     if (!AUTOPLAY_HINT) return null;
-    let btn = document.getElementById('bgmPlayBtn');
-    if (btn) return btn;
-    btn = document.createElement('button');
-    btn.id = 'bgmPlayBtn';
-    btn.textContent = '🔊 Play music';
-    Object.assign(btn.style, {
-      position:'fixed', right:'12px', bottom:'12px', zIndex:'99',
-      padding:'10px 12px', borderRadius:'10px', border:'0',
-      fontWeight:'700', background:'#4e54c8', color:'#fff',
-      boxShadow:'0 6px 16px rgba(0,0,0,.15)', cursor:'pointer'
-    });
+
     document.body.appendChild(btn);
     btn.addEventListener('click', async () => {
       try{
@@ -928,6 +960,23 @@ const tracks = rawOneDriveLinks.map(oneDriveDirect);
     if (!audio || audio.paused) startBGM(true).catch(()=>{});
   }, { once:true });
 
+})();
+
+/* ==== IntersectionObserver: hidupkan .reveal saat terlihat ==== */
+(() => {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(ent => {
+      if (ent.isIntersecting) {
+        ent.target.classList.add('in');
+        io.unobserve(ent.target); // reveal sekali saja
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+
+  els.forEach(el => io.observe(el));
 })();
   </script>
 </body>
